@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class Library {
+public class BookInfo {
     private String bookTitle;
     private String genre;
     private String authorName;

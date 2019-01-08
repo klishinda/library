@@ -1,3 +1,10 @@
+DROP TABLE IF EXISTS book_authors;
+DROP TABLE IF EXISTS genres_of_books;
+DROP TABLE IF EXISTS genres;
+DROP TABLE IF EXISTS authors;
+DROP TABLE IF EXISTS books;
+
+
 create table authors (
                        id serial,
                        surname varchar(250) not null,
