@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.otus.library.model.Author;
 import ru.otus.library.model.AuthorBooksCounting;
 import ru.otus.library.model.BookInfo;
+import ru.otus.library.model.Genre;
 
 import java.util.List;
 
@@ -57,6 +58,21 @@ public class ResultsPrinterImpl implements ResultsPrinter {
         for (int i = 0; i < list.size(); i++) {
             table[i+1][0] = String.valueOf(list.get(i).getId());
             table[i+1][1] = list.get(i).getName() + " " + list.get(i).getSurname();
+        }
+
+        return tableBuilder.addFullBorder(BorderStyle.fancy_light).build();
+    }
+
+    public Table printGenres(List<Genre> list) {
+        String[][] table = new String[list.size()+1][2];
+        TableModel model = new ArrayTableModel(table);
+        TableBuilder tableBuilder = new TableBuilder(model);
+
+        table[0][0] = "ID";
+        table[0][1] = "ЖАНР";
+        for (int i = 0; i < list.size(); i++) {
+            table[i+1][0] = String.valueOf(list.get(i).getId());
+            table[i+1][1] = list.get(i).getName();
         }
 
         return tableBuilder.addFullBorder(BorderStyle.fancy_light).build();

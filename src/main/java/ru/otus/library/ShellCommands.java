@@ -12,6 +12,12 @@ import ru.otus.library.model.Book;
 import ru.otus.library.model.Genre;
 import ru.otus.library.printer.ResultsPrinter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
 @ShellComponent
 public class ShellCommands {
     private AuthorDao authorDao;
@@ -62,22 +68,57 @@ public class ShellCommands {
     }
 
     @ShellMethod("Add new book")
-    private void addBook(@ShellOption String name, @ShellOption int pages) {
-        bookDao.addBook(new Book(name, pages));
-    }
+    private void addBook(@ShellOption String name, @ShellOption int pages, @ShellOption String authorsId, @ShellOption String genresId) {
+        Scanner authorScanner = new Scanner(authorsId);
+        System.out.println(authorsId);
+        System.out.println(genresId);
+        List<Integer> authorList = new ArrayList<>();
+        while (authorScanner.hasNextInt()) {
+            System.out.println("a "+authorScanner.nextInt());
+            authorList.add(authorScanner.nextInt());
+        }
+        Scanner genreScanner = new Scanner(genresId);
+        List<Integer> genreList = new ArrayList<>();
+        while (genreScanner.hasNextInt()) {
+            System.out.println("g "+genreScanner.nextInt());
+            genreList.add(genreScanner.nextInt());
+        }
+        System.out.println(authorList.size() + " " + genreList.size());
 
-    @ShellMethod("Add author for book")
-    private void addAuthorForBook(@ShellOption int id_author, @ShellOption int id_book) {
-        bookDao.addAuthorForBook(id_author, id_book);
-    }
+        authorList = Arrays.stream(authorsId.replace(",", " ").split("\\s"))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
 
-    @ShellMethod("Add genre for book")
-    private void addGenreForBook(@ShellOption int id_genre, @ShellOption int id_book) {
-        bookDao.addGenreForBook(id_genre, id_book);
+        genreList = Arrays.stream(genresId.replace(",", " ").split("\\s"))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+
+        System.out.println(authorList.size() + " " + genreList.size());
+        bookDao.addBook(new Book(name, pages), authorList, genreList);
     }
 
     @ShellMethod("Remove book")
     private void deleteBook(@ShellOption int id) {
         bookDao.deleteBook(id);
+    }
+
+    @ShellMethod("Get author by id")
+    private Author getAuthorsById(@ShellOption int id) {
+        return authorDao.getAuthorById(id);
+    }
+
+    @ShellMethod("Get all authors")
+    private Table getAllAuthors() {
+        return printer.printAuthors(authorDao.getAllAuthors());
+    }
+
+    @ShellMethod("Get genre by id")
+    private Genre getGenreById(@ShellOption int id) {
+        return genreDao.getGenreById(id);
+    }
+
+    @ShellMethod("Get all genres")
+    private Table getAllGenres() {
+        return printer.printGenres(genreDao.getAllGenres());
     }
 }

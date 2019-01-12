@@ -4,12 +4,15 @@ package ru.otus.library.daos.bookDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.shell.jline.InteractiveShellApplicationRunner;
 import org.springframework.shell.jline.ScriptShellApplicationRunner;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
+import ru.otus.library.Main;
 import ru.otus.library.model.AuthorBooksCounting;
 import ru.otus.library.model.Book;
 import ru.otus.library.model.BookInfo;
@@ -19,16 +22,19 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(properties={
+/*@SpringBootTest(properties={
         InteractiveShellApplicationRunner.SPRING_SHELL_INTERACTIVE_ENABLED + "=false",
         ScriptShellApplicationRunner.SPRING_SHELL_SCRIPT_ENABLED + "=false"
-})
+}
+)*/
+@JdbcTest
+@Import(BookDao.class)
 public class BookDaoImplTest {
 
     @Autowired
     public BookDao bookDao;
 
-    @Test
+    /*@Test
     @Transactional
     @Rollback(true)
     public void addBook() {
@@ -58,7 +64,7 @@ public class BookDaoImplTest {
             System.out.println(bb.getBookTitle() + " " + bb.getGenre() + " " + bb.getAuthorName() + " " + bb.getNumberOfPages());
         }
         assertThat(b.get(0).getGenre()).isEqualTo("ДЕТЕКТИВ, ФИЛОСОФИЯ");
-    }
+    }*/
 
     @Test
     @Transactional
@@ -69,12 +75,12 @@ public class BookDaoImplTest {
         assertThat(b.get(0).getGenre()).isNotEqualTo("10 негритят");
     }
 
-    @Test
+    /*@Test
     @Transactional
     @Rollback(true)
     public void getBooksCountByAuthors() {
         bookDao.addAuthorForBook(3, 6);
         List<AuthorBooksCounting> b = bookDao.getBooksCountByAuthors();
         assertThat(b.get(0).getCounting()).isEqualTo(1);
-    }
+    }*/
 }

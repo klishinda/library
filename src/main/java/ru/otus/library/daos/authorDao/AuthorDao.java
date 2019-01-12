@@ -8,4 +8,6 @@ public interface AuthorDao {
     List<Author> getAuthorByName(String name);
     void addAuthor(Author author);
     void deleteAuthor(int id);
+    Author getAuthorById(int id);
+    List<Author> getAllAuthors();
 }

@@ -20,27 +20,21 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public void addBook(Book book) {
+    public void addBook(Book book, List<Integer> authorsId, List<Integer> genresId) {
         final HashMap<String, Object> params = new HashMap<>();
         params.put("name", book.getName());
         params.put("pages", book.getPages());
-        jdbc.update("insert into books (name, pages) values (:name, :pages)", params);
-    }
-
-    @Override
-    public void addAuthorForBook(int id_author, int id_book) {
-        final HashMap<String, Object> params = new HashMap<>();
-        params.put("id_author", id_author);
-        params.put("id_book", id_book);
-        jdbc.update("insert into book_authors values (:id_book, :id_author)", params);
-    }
-
-    @Override
-    public void addGenreForBook(int id_genre, int id_book) {
-        final HashMap<String, Object> params = new HashMap<>();
-        params.put("id_genre", id_genre);
-        params.put("id_book", id_book);
-        jdbc.update("insert into genres_of_books values (:id_book, :id_genre)", params);
+        params.put("id_book", book.getId());
+        book.setId(jdbc.queryForObject("insert into books (name, pages) values (:name, :pages) returning id;", params, Integer.class));
+        params.put("id_book", book.getId());
+        for (int a : authorsId) {
+            params.put("id_author", a);
+            jdbc.update("insert into book_authors values (:id_book, :id_author);", params);
+        }
+        for (int g : genresId) {
+            params.put("id_genre", g);
+            jdbc.update("insert into genres_of_books values (:id_book, :id_genre);", params);
+        }
     }
 
     @Override

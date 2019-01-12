@@ -38,4 +38,16 @@ public class AuthorDaoImpl implements AuthorDao {
         jdbc.update("update book_authors b set b.id_author = null where b.id_author = :id;" +
                 "delete from authors where id = :id", params);
     }
+
+    @Override
+    public Author getAuthorById(int id) {
+        final HashMap<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        return jdbc.queryForObject("select * from authors a where a.id = :id", params, new AuthorMapper());
+    }
+
+    @Override
+    public List<Author> getAllAuthors() {
+        return jdbc.query("select * from authors a", new AuthorMapper());
+    }
 }
