@@ -10,14 +10,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Genre {
-    Integer id;
-    String name;
+    private Long id;
+    private String name;
 
     public Genre(String name) {
         this.name = name;
     }
 
-    public Genre(Integer id) {
+    public Genre(Long id) {
         this.id = id;
     }
 

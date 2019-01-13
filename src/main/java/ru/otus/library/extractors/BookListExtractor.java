@@ -3,7 +3,6 @@ package ru.otus.library.extractors;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import ru.otus.library.model.Author;
 import ru.otus.library.model.Book;
-import ru.otus.library.model.BookList;
 import ru.otus.library.model.Genre;
 
 import java.sql.ResultSet;
@@ -11,49 +10,48 @@ import java.sql.SQLException;
 import java.util.*;
 
 
-public class BookListExtractor implements ResultSetExtractor<List<BookList>> {
+public class BookListExtractor implements ResultSetExtractor<List<Book>> {
     @Override
-    public List<BookList> extractData(ResultSet rs) throws SQLException {
-        List<BookList> booksList = new ArrayList<>();
-        Map<Book, Set<Author>> bookAuthors = new HashMap<>();
-        Map<Book, Set<Genre>> bookGenres = new HashMap<>();
+    public List<Book> extractData(ResultSet rs) throws SQLException {
+        List<Book> books = new ArrayList<>();
+        Map<Long, Set<Author>> bookAuthors = new HashMap<>();
+        Map<Long, Set<Genre>> bookGenres = new HashMap<>();
+        Set<Long> idBooks = new HashSet<>();
+        Long idBook;
         while (rs.next()) {
-            Book book = new Book(rs.getInt("id"), rs.getString("title"), rs.getInt("pages"));
             Author author = new Author();
             Genre genre = new Genre();
+            idBook = rs.getLong("id");
             author.setName(rs.getString("name"));
             author.setSurname(rs.getString("surname"));
             genre.setName(rs.getString("genre"));
-            Set<Author> authors = bookAuthors.get(book);
+
+            if (!idBooks.contains(idBook)) {
+                idBooks.add(rs.getLong("id"));
+                books.add(new Book(idBook, rs.getString("title"), rs.getLong("pages")));
+            }
+            Set<Author> authors = bookAuthors.get(idBook);
             if (authors == null) {
                 Set<Author> newAuthors = new HashSet<>();
                 newAuthors.add(author);
-                bookAuthors.put(book, newAuthors);
+                bookAuthors.put(idBook, newAuthors);
             } else {
                 authors.add(author);
             }
-            Set<Genre> genres = bookGenres.get(book);
+            Set<Genre> genres = bookGenres.get(idBook);
             if (genres == null) {
                 Set<Genre> newGenres = new HashSet<>();
                 newGenres.add(genre);
-                bookGenres.put(book, newGenres);
+                bookGenres.put(idBook, newGenres);
             } else {
                 genres.add(genre);
             }
         }
-
-        Set<Book> allBooks = new HashSet<>();
-        for (Map.Entry<Book, Set<Author>> authorMap : bookAuthors.entrySet()) {
-            allBooks.addAll(bookAuthors.keySet());
-        }
-        for (Map.Entry<Book, Set<Genre>> genreMap : bookGenres.entrySet()) {
-            allBooks.addAll(bookGenres.keySet());
+        for (Book b : books) {
+            b.setAuthors(bookAuthors.get(b.getId()));
+            b.setGenres(bookGenres.get(b.getId()));
         }
 
-        for (Book b: allBooks) {
-            booksList.add(new BookList(b, bookAuthors.get(b), bookGenres.get(b)));
-        }
-
-        return booksList;
+        return books;
     }
 }

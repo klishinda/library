@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ResultsPrinter {
     Table printResultsBooksCountByAuthors(List<AuthorBooksCounting> list);
-    Table printResultsAllBooks(List<BookList> list);
+    Table printResultsAllBooks(List<Book> list);
     Table printAuthors(List<Author> authorByName);
     Table printGenres(List<Genre> list);
     Table printResultsBooksByTitle(List<Book> booksByTitle);

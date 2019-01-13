@@ -24,7 +24,7 @@ public class GenreDaoImpl implements GenreDao {
     }
 
     @Override
-    public void deleteGenre(int id) {
+    public void deleteGenre(Long id) {
         final HashMap<String, Object> params = new HashMap<>();
         params.put("id", id);
         jdbc.update("update genres_of_books gb set gb.id_genre = null where gb.id_genre = :id;" +
@@ -32,7 +32,7 @@ public class GenreDaoImpl implements GenreDao {
     }
 
     @Override
-    public Genre getGenreById(int id) {
+    public Genre getGenreById(Long id) {
         final HashMap<String, Object> params = new HashMap<>();
         params.put("id", id);
         return jdbc.queryForObject("select * from genres g where g.id = :id", params, new GenreMapper());

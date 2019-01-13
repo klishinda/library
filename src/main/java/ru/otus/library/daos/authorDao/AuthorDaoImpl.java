@@ -32,7 +32,7 @@ public class AuthorDaoImpl implements AuthorDao {
     }
 
     @Override
-    public void deleteAuthor(int id) {
+    public void deleteAuthor(Long id) {
         final HashMap<String, Object> params = new HashMap<>();
         params.put("id", id);
         jdbc.update("update book_authors b set b.id_author = null where b.id_author = :id;" +
@@ -40,7 +40,7 @@ public class AuthorDaoImpl implements AuthorDao {
     }
 
     @Override
-    public Author getAuthorById(int id) {
+    public Author getAuthorById(Long id) {
         final HashMap<String, Object> params = new HashMap<>();
         params.put("id", id);
         return jdbc.queryForObject("select * from authors a where a.id = :id", params, new AuthorMapper());

@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Author {
-    private Integer id;
+    private Long id;
     private String surname;
     private String name;
 
@@ -19,7 +19,7 @@ public class Author {
         this.name = name;
     }
 
-    public Author(Integer id) {
+    public Author(Long id) {
         this.id = id;
     }
 
