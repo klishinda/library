@@ -7,6 +7,7 @@ import org.springframework.shell.table.*;
 import ru.otus.library.daos.authorDao.AuthorDao;
 import ru.otus.library.daos.bookDao.BookDao;
 import ru.otus.library.daos.genreDao.GenreDao;
+import ru.otus.library.libraryService.LibraryDbService;
 import ru.otus.library.model.Author;
 import ru.otus.library.model.Book;
 import ru.otus.library.model.Genre;
@@ -24,17 +25,24 @@ public class ShellCommands {
     private GenreDao genreDao;
     private BookDao bookDao;
     private ResultsPrinter printer;
+    private LibraryDbService libraryDbService;
 
-    public ShellCommands(AuthorDao authorDao, GenreDao genreDao, BookDao bookDao, ResultsPrinter printer) {
+    public ShellCommands(AuthorDao authorDao, GenreDao genreDao, BookDao bookDao, ResultsPrinter printer, LibraryDbService libraryDbService) {
         this.authorDao = authorDao;
         this.genreDao = genreDao;
         this.bookDao = bookDao;
         this.printer = printer;
+        this.libraryDbService = libraryDbService;
     }
 
     @ShellMethod("Counting all books in the context of the authors")
     private Table getBooksCountByAuthors() {
         return printer.printResultsBooksCountByAuthors(bookDao.getBooksCountByAuthors());
+    }
+
+    @ShellMethod("Get book by its title")
+    private Table getBooksByTitle(@ShellOption String partOfTitle) {
+        return printer.printResultsBooksByTitle(bookDao.getBooksByTitle(partOfTitle));
     }
 
     @ShellMethod("Get all information about library")
@@ -70,20 +78,15 @@ public class ShellCommands {
     @ShellMethod("Add new book")
     private void addBook(@ShellOption String name, @ShellOption int pages, @ShellOption String authorsId, @ShellOption String genresId) {
         Scanner authorScanner = new Scanner(authorsId);
-        System.out.println(authorsId);
-        System.out.println(genresId);
         List<Integer> authorList = new ArrayList<>();
         while (authorScanner.hasNextInt()) {
-            System.out.println("a "+authorScanner.nextInt());
             authorList.add(authorScanner.nextInt());
         }
         Scanner genreScanner = new Scanner(genresId);
         List<Integer> genreList = new ArrayList<>();
         while (genreScanner.hasNextInt()) {
-            System.out.println("g "+genreScanner.nextInt());
             genreList.add(genreScanner.nextInt());
         }
-        System.out.println(authorList.size() + " " + genreList.size());
 
         authorList = Arrays.stream(authorsId.replace(",", " ").split("\\s"))
                 .map(Integer::parseInt)
@@ -92,9 +95,7 @@ public class ShellCommands {
         genreList = Arrays.stream(genresId.replace(",", " ").split("\\s"))
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
-
-        System.out.println(authorList.size() + " " + genreList.size());
-        bookDao.addBook(new Book(name, pages), authorList, genreList);
+        libraryDbService.addBook(new Book(name, pages), authorList, genreList);
     }
 
     @ShellMethod("Remove book")

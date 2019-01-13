@@ -1,7 +1,13 @@
+server:
+  port: 8089
+
 spring:
-
-shell:
-
-  interactive:
-
-    enabled: false
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/library
+    username: postgres
+    password: qwerty
+    initialization-mode: always
+  shell:
+    interactive:
+      enabled: false

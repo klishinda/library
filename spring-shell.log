@@ -112,3 +112,19 @@
 1547281962619:add-book TTRT 199 1,2,3 5,6,7
 1547281971166:get-all-books
 1547282081589:add-book T1 100 1,2,3,4 1,2
+1547370726891:help
+1547370733142:get-all-books
+1547396573050:add-book TTR 33 1,2,3 6,9,2
+1547396582377:get-all-books
+1547404589686:help
+1547404608356:get-books-by-title 10
+1547404674866:get-books-by-title НАРОДНЫЕ
+1547404701549:add-book TEST 200 1,2 2,5
+1547404716209:get-books-by-title TES
+1547404760896:get-all-authors-by-name КРИСТ
+1547404830616:add-author TEST
+1547404860439:add-author TEST TEST
+1547404865539:add-author TEST TEST2
+1547404876107:get-all-authors-by-name TEST
+1547405449235:help
+1547405462535:get-books-count-by-authors

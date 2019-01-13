@@ -2,11 +2,10 @@ package ru.otus.library.daos.bookDao;
 
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import ru.otus.library.extractors.BookListExtractor;
 import ru.otus.library.mappers.AuthorBooksCountingMapper;
-import ru.otus.library.mappers.BookInfoMapper;
-import ru.otus.library.model.AuthorBooksCounting;
-import ru.otus.library.model.Book;
-import ru.otus.library.model.BookInfo;
+import ru.otus.library.mappers.BookMapper;
+import ru.otus.library.model.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,19 +19,19 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public void addBook(Book book, List<Integer> authorsId, List<Integer> genresId) {
+    public void addBook(BookList bookList) {
         final HashMap<String, Object> params = new HashMap<>();
-        params.put("name", book.getName());
-        params.put("pages", book.getPages());
-        params.put("id_book", book.getId());
-        book.setId(jdbc.queryForObject("insert into books (name, pages) values (:name, :pages) returning id;", params, Integer.class));
-        params.put("id_book", book.getId());
-        for (int a : authorsId) {
-            params.put("id_author", a);
+        params.put("name", bookList.getBook().getName());
+        params.put("pages", bookList.getBook().getPages());
+        params.put("id_book", bookList.getBook().getId());
+        bookList.getBook().setId(jdbc.queryForObject("insert into books (name, pages) values (:name, :pages) returning id;", params, Integer.class));
+        params.put("id_book", bookList.getBook().getId());
+        for (Author a : bookList.getAuthors()) {
+            params.put("id_author", a.getId());
             jdbc.update("insert into book_authors values (:id_book, :id_author);", params);
         }
-        for (int g : genresId) {
-            params.put("id_genre", g);
+        for (Genre g : bookList.getGenres()) {
+            params.put("id_genre", g.getId());
             jdbc.update("insert into genres_of_books values (:id_book, :id_genre);", params);
         }
     }
@@ -47,17 +46,24 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
+    public List<Book> getBooksByTitle(String name) {
+        final HashMap<String, Object> params = new HashMap<>();
+        params.put("name", name.toUpperCase());
+        return jdbc.query("select * from books b where upper(b.name) = :name", params, new BookMapper());
+    }
+
+    @Override
     public List<AuthorBooksCounting> getBooksCountByAuthors() {
         return jdbc.query("select a.surname, a.name, coalesce((select count(*) from book_authors b where b.id_author = a.id group by b.id_author), 0) cnt from authors a order by a.surname;", new AuthorBooksCountingMapper());
     }
 
     @Override
-    public List<BookInfo> getAllBooks() {
-        return jdbc.query("select b.name title, string_agg(distinct g.name,', ') genre, string_agg(distinct a.name || ' ' || a.surname, ', ') as name, b.pages from books b " +
-                "left join genres_of_books gb on gb.id_book = b.id " +
-                "left join genres g on g.id = gb.id_genre " +
-                "left join book_authors ba on ba.id_book = b.id " +
-                "left join authors a on a.id = ba.id_author " +
-                "group by b.name, b.pages order by b.name;", new BookInfoMapper());
+    public List<BookList> getAllBooks() {
+        return jdbc.query("select b.id, b.name title, g.name genre, a.name as name, a.surname, b.pages from books b " +
+                "                left join genres_of_books gb on gb.id_book = b.id " +
+                "                left join genres g on g.id = gb.id_genre " +
+                "                left join book_authors ba on ba.id_book = b.id " +
+                "                left join authors a on a.id = ba.id_author;", new BookListExtractor());
+
     }
 }

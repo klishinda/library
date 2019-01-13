@@ -1,16 +1,14 @@
 package ru.otus.library.printer;
 
 import org.springframework.shell.table.Table;
-import ru.otus.library.model.Author;
-import ru.otus.library.model.AuthorBooksCounting;
-import ru.otus.library.model.BookInfo;
-import ru.otus.library.model.Genre;
+import ru.otus.library.model.*;
 
 import java.util.List;
 
 public interface ResultsPrinter {
     Table printResultsBooksCountByAuthors(List<AuthorBooksCounting> list);
-    Table printResultsAllBooks(List<BookInfo> list);
+    Table printResultsAllBooks(List<BookList> list);
     Table printAuthors(List<Author> authorByName);
     Table printGenres(List<Genre> list);
+    Table printResultsBooksByTitle(List<Book> booksByTitle);
 }
