@@ -1,0 +1,146 @@
+1546788206878:help
+1546788212899:count-authors
+1546792636754:help
+1546792641755:count-authors
+1546793381773:help
+1546793387272:count-authors
+1546793597964:stacktrace
+1546793643994:help
+1546793651165:count-authors
+1546796291800:halp
+1546796295734:help
+1546796301854:get-all-library
+1546796312782:stacktrace
+1546796466023:help
+1546796472486:get-all-library
+1546796589717:count-authors-books
+1546796628790:help
+1546796634615:get-all-library
+1546797531936:рудз
+1546797535764:help
+1546797540906:get-all-library
+1546873205340:help
+1546873211630:get-all-library
+1546873889684:help
+1546873896267:get-all-library
+1546875545690:help
+1546876297995:get-all-authors-by-name И
+1546876317643:get-all-authors-by-name
+1546876325971:get-all-authors-by-name Р
+1546876433670:get-all-authors-by-name И
+1546876448362:get-all-authors-by-name О
+1546876501254:get-all-authors-by-name П
+1546876560254:get-all-authors-by-name И
+1546876844713:help
+1546876853236:get-all-authors-by-name И
+1546876868179:stacktrace
+1546877961127:help
+1546877967929:get-all-authors-by-name
+1546877973101:get-all-authors-by-name И
+1546878347882:help
+1546878355812:get-all-authors-by-name B
+1546878360260:get-all-authors-by-name И
+1546878472190:get-all-authors-by-name B
+1546878611278:get-all-authors-by-name И
+1546878644423:get-all-authors-by-name ШЕКЛИ
+1546878664420:stacktrace
+1546878706550:get-all-authors-by-name ШЕКЛИ
+1546880467948:help
+1546880473482:get-all-authors-by-name
+1546880478241:get-all-authors-by-name И
+1546880549500:рудз
+1546880553090:help
+1546880570323:add-author T test
+1546880774765:get-all-authors-by-name T
+1546881226805:help
+1546881236683:add-author RR rr
+1546929081847:help
+1546929089054:count-authors-books
+1546929099287:delete-author
+1546929106965:get-all-authors-by-name
+1546929126603:get-all-library
+1546931616177:help
+1546931631087:add-author TTT tt
+1546931646775:add-book TTT 60
+1546931657111:add-genre TTT
+1546931713846:add-author-for-book 20 20
+1546931749383:delete-book 20
+1546931781134:add-genre-for-book 1 3
+1546931966743:add_author TTT tt
+1546931979023:add-author TTT tt
+1546932538063:help
+1546932543197:get-all-library
+1546933593039:help
+1546933598882:get-all-books
+1546933606589:get-books-count-by-authors
+1546933644171:add-author TTT tt
+1546933653558:add-book TTT 60
+1546933663879:add-genre YYY
+1546933670302:help
+1546933676649:get-all-books
+1546933755032:help
+1546933763255:add-book TTT 60
+1546933772668:get-all-books
+1546933986063:help
+1546933991583:get-books-count-by-authors
+1546934190237:help
+1546934196123:get-all-books
+1546939098701:help
+1546939103741:get-all-books
+1546969911053:help
+1546969921613:get-authors-by-id
+1546969925708:get-authors-by-id 1
+1546969938133:stacktrace
+1546970012153:get-authors-by-id 1
+1546970268793:help
+1546970274892:get-all-authors
+1546970850659:help
+1546970858583:get-all-genres
+1546970867399:get-genre-by-id 11
+1547062442908:help
+1547062450455:add-book
+1547062515688:add-book TTT 199 1,2,3 5,6,7
+1547062525980:get-all-books
+1547062651409:add-book TTT 199 1,2,3 5,6,7
+1547063341144:stacktrace
+1547063360969:add-book TTT 199 1,2,3 5,6,7
+1547063370545:add-book TTRT 199 1,2,3 5,6,7
+1547281334247:help
+1547281359130:add-book TTRT 199 1,2,3 5,6,7
+1547281475326:help
+1547281491106:get-all-books
+1547281962619:add-book TTRT 199 1,2,3 5,6,7
+1547281971166:get-all-books
+1547282081589:add-book T1 100 1,2,3,4 1,2
+1547370726891:help
+1547370733142:get-all-books
+1547396573050:add-book TTR 33 1,2,3 6,9,2
+1547396582377:get-all-books
+1547404589686:help
+1547404608356:get-books-by-title 10
+1547404674866:get-books-by-title НАРОДНЫЕ
+1547404701549:add-book TEST 200 1,2 2,5
+1547404716209:get-books-by-title TES
+1547404760896:get-all-authors-by-name КРИСТ
+1547404830616:add-author TEST
+1547404860439:add-author TEST TEST
+1547404865539:add-author TEST TEST2
+1547404876107:get-all-authors-by-name TEST
+1547405449235:help
+1547405462535:get-books-count-by-authors
+1547414241882:help
+1547414248382:get-all-books
+1547414287782:add-book Test 220 1,2,3 5,6
+1547414294782:get-all-books
+1547416084172:help
+1547416089381:get-all-books
+1547416104601:get-all-authors-by-name КРИСТИ
+1547416115901:get-all-authors
+1547416127486:get-all-genres
+1547416130486:рудз
+1547416133932:help
+1547416140731:get-authors-by-id 4
+1547416166825:get-books-by-title НАРОДНЫЕ СКАЗКИ
+1547416184109:get-books-count-by-authors
+1547416210571:add-book TESSST 222 2,3 4,5
+1547416219712:get-all-books
